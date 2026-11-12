@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Docs — STACK</title>
+    <meta name="description" content="How STACK works: coins built on coins, buying the top, fees, graduation and risk." />
+    <meta name="theme-color" content="#060B14" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header class="nav">
+      <a class="wordmark" href="/" aria-label="STACK home">
+        <svg class="wordmark-mark" viewBox="0 0 18 16" aria-hidden="true">
+          <rect x="6" y="0" width="6" height="4" fill="#9FD8FF" />
+          <rect x="3" y="6" width="12" height="4" fill="#4F86C6" />
+          <rect x="0" y="12" width="18" height="4" fill="#2E5A8C" />
+        </svg>
+        <span>STACK</span>
+      </a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/#towers">Towers</a>
+        <a href="/#build">Build</a>
+        <a href="/docs" aria-current="page">Docs</a>
+      </nav>
+      <button class="btn btn-line btn-sm" type="button" data-connect>Connect wallet</button>
+    </header>
+
+    <main class="docs">
+      <aside class="docs-toc mono" aria-label="On this page">
+        <p class="kicker">Docs</p>
+        <a href="#what">What STACK is</a>
+        <a href="#floors">Floors and towers</a>
+        <a href="#buy">Buying the top</a>
+        <a href="#holders">Holders earn the floor below</a>
+        <a href="#fees">Fees</a>
+        <a href="#graduation">Graduation</a>
+        <a href="#height">How high a tower goes</a>
+        <a href="#data">Where the numbers come from</a>
+        <a href="#risk">Risk</a>
+      </aside>
+
+      <article class="docs-body">
+        <p class="kicker">Launchpad on Raydium LaunchLab</p>
+        <h1 class="docs-title">How STACK works</h1>
+        <p class="lead">Every coin on STACK is built on top of another coin. Buy the top and every floor underneath gets bought with it, all the way down to SOL.</p>
+
+        <section id="what">
+          <h2>What STACK is</h2>
+          <p>STACK is a launchpad on Raydium LaunchLab. Most launchpads pair every coin against SOL. On STACK you pick what your coin stands on: SOL, any other token, or a coin that is already part of a tower.</p>
+        </section>
+
+        <section id="floors">
+          <h2>Floors and towers</h2>
+          <p>Your coin is paired against its foundation. On LaunchLab the foundation is the quote token, so your coin's curve is priced in it and every buy pays in it.</p>
+          <p>That makes your coin the floor above the foundation. Floor number = the foundation's floor + 1. SOL is the ground, L0. A coin on SOL is L1, a coin on that coin is L2, and so on.</p>
+          <figure class="docs-fig mono" aria-label="Example tower">
+            <div class="df-row" style="--lv:#9FD8FF;--w:42%"><span>L3</span><b>$STINK</b></div>
+            <div class="df-row" style="--lv:#4F86C6;--w:58%"><span>L2</span><b>$STANK</b></div>
+            <div class="df-row" style="--lv:#2E5A8C;--w:76%"><span>L1</span><b>$STONK</b></div>
+            <div class="df-row is-ground" style="--lv:#0D1626;--w:100%"><span>L0</span><b>SOL</b></div>
+          </figure>
+        </section>
+
+        <section id="buy">
+          <h2>Buying the top</h2>
+          <p>To buy the top floor you need the floor below it, which needs the floor below that. STACK routes the whole way in one transaction: SOL → L1 → L2 → … → the top.</p>
+          <p>So one buy of the top coin is also a buy of every coin under it. Each hop locks tokens of the floor below into the floor above. That is the cascade you see run down the drawing.</p>
+        </section>
+
+        <section id="holders">
+          <h2>Holders earn the floor below</h2>
+          <p>Holding a floor pays you in the floor under it. Hold $STINK, earn $STANK. Hold $STANK, earn $STONK. Payouts are sent manually for now.</p>
+        </section>
+
+        <section id="fees">
+          <h2>Fees</h2>
+          <p>Trading fees on a floor are paid in that floor's foundation token. They are split:</p>
+          <dl class="docs-split mono">
+            <div><dt>40%</dt><dd>to holders of the floor, paid in the floor below</dd></div>
+            <div><dt>30%</dt><dd>buys back $STACK</dd></div>
+            <div><dt>30%</dt><dd>treasury</dd></div>
+          </dl>
+          <p>$STACK is the default foundation for new towers. Build on it and every buy in your tower also runs through $STACK.</p>
+        </section>
+
+        <section id="graduation">
+          <h2>Graduation</h2>
+          <p>When a floor's curve fills, it moves to a Raydium CPMM pool against its foundation. The LP is burned, so the foundation tokens in that pool stay locked for good. The graduation target is set in the foundation token and sized to a fixed SOL value at launch.</p>
+        </section>
+
+        <section id="height">
+          <h2>How high a tower goes</h2>
+          <p>A buy through the whole tower has to fit in one Solana transaction. Towers are capped at a height where that still works.</p>
+        </section>
+
+        <section id="data">
+          <h2>Where the numbers come from</h2>
+          <p>Towers are traced on-chain: a coin, then its quote token, then that token's quote, down to SOL. The quote comes from Raydium LaunchLab's <code>mintB</code> field, or from a coin's Raydium pool on DexScreener. Value locked in a floor is the value of the floor-below tokens sitting in that floor's pools. Prices and volume come from DexScreener.</p>
+        </section>
+
+        <section id="risk">
+          <h2>Risk</h2>
+          <p>Memecoins are volatile and can go to zero. A tower works both ways: selling the top back to SOL sells every floor on the way down, and a floor that falls drags on everything built on it. Only use what you can afford to lose. Nothing here is financial advice.</p>
+        </section>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <a class="wordmark wordmark-sm" href="/">
+        <svg class="wordmark-mark" viewBox="0 0 18 16" aria-hidden="true">
+          <rect x="6" y="0" width="6" height="4" fill="#9FD8FF" />
+          <rect x="3" y="6" width="12" height="4" fill="#4F86C6" />
+          <rect x="0" y="12" width="18" height="4" fill="#2E5A8C" />
+        </svg>
+        <span>STACK</span>
+      </a>
+      <nav class="footer-links">
+        <a href="/#towers">Towers</a>
+        <a href="/#build">Build</a>
+        <a href="/docs">Docs</a>
+        <a href="https://raydium.io/launchpad/" target="_blank" rel="noopener">Raydium LaunchLab</a>
+      </nav>
+      <p class="risk mono">Memecoins are volatile and can go to zero. A buy through a tower moves every floor under it, both ways. Nothing here is financial advice.</p>
+    </footer>
+
+    <script type="module" src="/src/docs.js"></script>
+  </body>
+</html>
