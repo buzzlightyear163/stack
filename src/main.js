@@ -320,8 +320,21 @@ async function setFoundation(mint, known) {
         state.build.tower = r.tower;
         $('base-msg').textContent = `${tk(r.tower.top)} sits ${r.tower.height - 1} floor${r.tower.height === 2 ? '' : 's'} above ${tk(r.tower.layers[0].symbol)}.`;
       } catch {
-        state.build.tower = null;
-        $('base-msg').textContent = 'Couldn’t find a pool for that CA. Check the address.';
+        if (state.build.base !== mint) return;
+        if (mint === STACK.mint) {
+          // $STACK sits on SOL; before its pool is indexed, draw it from what we know
+          state.build.tower = {
+            id: mint,
+            layers: [
+              { level: 0, mint: SOL_MINT, symbol: 'SOL', ground: true },
+              { level: 1, mint, symbol: 'STACK' },
+            ],
+          };
+          $('base-msg').textContent = '$STACK sits on SOL.';
+        } else {
+          state.build.tower = null;
+          $('base-msg').textContent = 'Couldn’t find a pool for that CA. Check the address.';
+        }
       }
     }
   }
@@ -420,7 +433,38 @@ async function loadTowers(first = false) {
   renderChips();
 }
 
+// ---------------------------------------------------------------- CA
+function initCA() {
+  const boxes = document.querySelectorAll('[data-ca-box]');
+  if (!STACK.mint) {
+    boxes.forEach((b) => (b.hidden = true));
+    return;
+  }
+  document.querySelectorAll('[data-ca]').forEach((c) => (c.textContent = STACK.mint));
+  document.querySelectorAll('[data-ca-copy]').forEach((btn) =>
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(STACK.mint);
+      } catch {
+        const t = document.createElement('textarea');
+        t.value = STACK.mint;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        t.remove();
+      }
+      btn.textContent = 'Copied';
+      btn.classList.add('is-done');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('is-done');
+      }, 1400);
+    })
+  );
+}
+
 // ---------------------------------------------------------------- boot
+initCA();
 initWallet(document.querySelectorAll('[data-connect]'));
 if (STACK.x) {
   const a = document.createElement('a');

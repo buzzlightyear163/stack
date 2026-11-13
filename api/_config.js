@@ -9,6 +9,8 @@ export const PLATFORMS = [
 ];
 // Always traced, even if they fall out of the latest lists
 export const FEATURED = ['H3gXgvf2kza3vz3WhP3KoKdprhiu7oW6Q1ARXLy5Erhf'];
-// STACK's own LaunchLab platform config (platformInfo.pubKey) — fill in when it exists
+// $STACK itself. Its LaunchLab platform is read from it automatically once it's live.
+export const STACK_MINT = 'EzBs8D3ZcmxQxpawHoiTdi9JXuUCmuFDFAkVCguQJ6oj';
+// STACK's own LaunchLab platform config (platformInfo.pubKey) — optional override
 export const PLATFORM_ID = process.env.STACK_PLATFORM_ID || '';
-export const RPC_URL = process.env.RPC_URL || 'https://api.mainnet-beta.solana.com';
+export const RPC_URL = process.env.RPC_URL || 'https://solana-rpc.publicnode.com';

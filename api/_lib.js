@@ -241,8 +241,12 @@ export async function rayPlatform(platformId, size = 100) {
   return j?.data?.rows || [];
 }
 
-export async function discoverTowers({ seeds = [], featured = [], platformId = '', platforms = [] } = {}) {
+export async function discoverTowers({ seeds = [], featured = [], platformId = '', platforms = [], stackMint = '' } = {}) {
   const ctx = createCtx();
+  if (!platformId && stackMint) {
+    await ensureRows(ctx, [stackMint]);
+    platformId = ctx.rows.get(stackMint)?.platformInfo?.pubKey || '';
+  }
   const lists = await Promise.all([
     safe(rayList('new'), []),
     safe(rayList('lastTrade'), []),
@@ -295,6 +299,7 @@ export async function discoverTowers({ seeds = [], featured = [], platformId = '
   return {
     updatedAt: Date.now(),
     solUsd: ctx.solUsd,
+    platformId: platformId || null,
     towers,
     stats: {
       towers: towers.length,
